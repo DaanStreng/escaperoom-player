@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+</head>
+<body>
+<div class="section"></div>
+<main>
+    <center>
+        <div class="section"></div>
+
+        <h5 class="indigo-text">Create an account</h5>
+        <div class="section"></div>
+
+        <div class="container">
+            <div class="z-depth-1 grey lighten-4 row" style="    min-width: 400px;display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                <form id="createForm" class="col s12" method="post" action="/create">
+                    <div class='row'>
+                        <div class='col s12'>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='text' name='username' id='username' />
+                            <label for='username'>Enter your username</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='password' name='password' id='password' />
+                            <label for='password'>Enter your password</label>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <input class='validate' type='password' name='password_confirm' id='password_confirm' />
+                            <label for='password_confirm'>Enter your password again</label>
+                        </div>
+                    </div>
+
+                    <br />
+                    <center>
+                        <div class='row'>
+                            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Register</button>
+                        </div>
+                    </center>
+                </form>
+            </div>
+        </div>
+    </center>
+
+    <div class="section"></div>
+    <div class="section"></div>
+
+    <script>
+        $(document).ready(function(){
+            $("#createForm").submit(function(e){
+                e.preventDefault();
+                if ($("#password_confirm").val() == $("#password").val()) {
+
+                    var data = $(this).serialize();
+                $.ajax({
+                    data:data,
+                    url:"register/",
+                    type:"post",
+                    success:function(data){
+                        if (data.error){
+                            Materialize.toast(data.message,3000,"red");
+                        }
+                        else
+                            document.location.href = "/mainroom/view/enter/"+data.uuid;
+                    },
+                    error:function(data){
+                        console.log(data);
+                        if (data.error){
+                            Materialize.toast(data.message,3000,"red");
+                        }
+                    }
+                });
+                }
+                else{
+                    Materialize.toast("Passwords do not match",3000,"red");
+                }
+            });
+        });
+    </script>
+</main>
+</body>
+</html>

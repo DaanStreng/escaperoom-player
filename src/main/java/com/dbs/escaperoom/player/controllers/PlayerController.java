@@ -41,7 +41,7 @@ public class PlayerController {
         throw new NotFoundException("Password does not match");
     }
 
-    @RequestMapping(method = RequestMethod.POST,path="/{uuid}")
+    @RequestMapping(method = RequestMethod.POST,path="/getinfo/{uuid}")
     public Player getPlayer(@PathVariable String uuid){
         Player check = playerRepository.getPlayer(uuid);
         if(check==null){
